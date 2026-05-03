@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Assistant</title>
+    <meta name="description" content="Interactive guide and assistant for understanding the election process.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="app-container">
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-check-to-slot"></i>
+                <h1>ElectAssist</h1>
+            </div>
+            <p>Your interactive guide to the democratic process.</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="timeline">
+                <i class="fa-solid fa-timeline"></i> Process Timeline
+            </button>
+            <button class="tab-btn" data-tab="flashcards">
+                <i class="fa-solid fa-clone"></i> Flashcards
+            </button>
+            <button class="tab-btn" data-tab="assignment">
+                <i class="fa-solid fa-pen-to-square"></i> AI Assignment
+            </button>
+            <button class="tab-btn" data-tab="assistant">
+                <i class="fa-solid fa-robot"></i> Ask Assistant
+            </button>
+        </nav>
+
+        <div class="content-area">
+            <!-- Timeline Section -->
+            <section id="timeline" class="tab-content active">
+                <div class="timeline-container">
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot">1</div>
+                        <div class="timeline-content">
+                            <h3>Voter Registration</h3>
+                            <p class="date">Months before Election</p>
+                            <p>Ensure you are eligible and registered to vote in your state. Deadlines vary, so check early!</p>
+                            <button class="action-btn" onclick="askAssistant('How do I register to vote?')">How to Register?</button>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot">2</div>
+                        <div class="timeline-content">
+                            <h3>Campaigning & Debates</h3>
+                            <p class="date">Weeks before Election</p>
+                            <p>Candidates present their platforms, attend town halls, and participate in televised debates.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot">3</div>
+                        <div class="timeline-content">
+                            <h3>Early Voting & Mail-In</h3>
+                            <p class="date">Days before Election</p>
+                            <p>Many regions allow you to cast your ballot before the official election day via mail or in-person early voting centers.</p>
+                            <button class="action-btn" onclick="askAssistant('What is mail-in voting?')">Learn more</button>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot">4</div>
+                        <div class="timeline-content">
+                            <h3>Election Day</h3>
+                            <p class="date">The Big Day</p>
+                            <p>Polls open! Bring your ID if required, wait in line, and cast your ballot. Make your voice heard.</p>
+                            <button class="action-btn" onclick="askAssistant('What should I bring on Election Day?')">Checklist</button>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot">5</div>
+                        <div class="timeline-content">
+                            <h3>Counting & Results</h3>
+                            <p class="date">Election Night & Beyond</p>
+                            <p>Votes are tallied. Depending on the closeness of the race and mail-in ballots, final official results may take days.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Flashcards Section -->
+            <section id="flashcards" class="tab-content">
+                <div class="flashcards-wrapper">
+                    <div class="flashcard-scene">
+                        <div class="flashcard" id="active-flashcard" onclick="this.classList.toggle('is-flipped')">
+                            <div class="card-face card-front">
+                                <h3 id="flashcard-term">Loading...</h3>
+                                <p class="flip-hint"><i class="fa-solid fa-hand-pointer"></i> Tap to flip</p>
+                            </div>
+                            <div class="card-face card-back">
+                                <p id="flashcard-def">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flashcard-controls">
+                        <button id="prev-card" class="action-btn"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                        <span id="card-counter">1 / 5</span>
+                        <button id="next-card" class="action-btn">Next <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Assignment Section -->
+            <section id="assignment" class="tab-content">
+                <div class="assignment-container">
+                    <div class="assignment-header">
+                        <h3>AI Knowledge Check</h3>
+                        <p>Test your understanding. The AI Grader will provide feedback.</p>
+                    </div>
+                    <div class="quiz-area" id="quiz-area">
+                        <!-- Quiz questions injected by JS -->
+                    </div>
+                    <button class="action-btn submit-quiz-btn" id="submit-quiz">Submit for AI Grading</button>
+                    <div id="quiz-result" class="quiz-result" style="display: none;">
+                        <div class="ai-feedback-header">
+                            <i class="fa-solid fa-robot"></i> <h4>AI Grader Feedback</h4>
+                        </div>
+                        <p id="ai-feedback-text"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Assistant Section -->
+            <section id="assistant" class="tab-content">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="bot-avatar"><i class="fa-solid fa-robot"></i></div>
+                        <div>
+                            <h3>ElectBot</h3>
+                            <span class="status">Online</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message bot-message">
+                            <p>Hi there! 👋 I'm ElectBot. How can I help you understand the election process today?</p>
+                        </div>
+                        <div class="quick-replies">
+                            <button onclick="askAssistant('How do I register to vote?')">Register to Vote</button>
+                            <button onclick="askAssistant('What is the election process?')">Election Process</button>
+                            <button onclick="askAssistant('What is the Electoral College?')">Electoral College</button>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" id="user-input" placeholder="Ask a question about the election..." autocomplete="off">
+                        <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
